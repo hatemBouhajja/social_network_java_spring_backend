@@ -7,7 +7,7 @@ import java.util.Collection;
 
 
 @Repository
-public interface UserDao extends JpaRepository<User,Long>{
+public interface UserDao extends JpaRepository<User,Long> {
     User findByEmail(String email);
     Collection <User> findByUserNameContaining(String name);
 }

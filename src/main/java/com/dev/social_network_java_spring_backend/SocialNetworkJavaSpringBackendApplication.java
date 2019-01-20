@@ -9,4 +9,7 @@ public class SocialNetworkJavaSpringBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(SocialNetworkJavaSpringBackendApplication.class, args);
     }
+
+
+
 }
