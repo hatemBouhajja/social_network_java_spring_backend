@@ -1,11 +1,9 @@
 package com.dev.social_network_java_spring_backend.Entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -21,11 +19,15 @@ public class User implements Serializable {
     private String userName;
     private String email;
     private String pwd;
-    private int phone;
+    private Integer phone;
     private Date birhDate;
     private Boolean gender;
     private Timestamp creationDate;
     private Timestamp updateDate;
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "user",cascade=CascadeType.ALL)
+    private Profile profile;
 
     public User(String firstName, String lastName, String userName, String email, String pwd, int phone, Date birhDate, Boolean gender) {
         this.firstName = firstName;
@@ -125,5 +127,13 @@ public class User implements Serializable {
 
     public void setUpdateDate(Timestamp updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
     }
 }
