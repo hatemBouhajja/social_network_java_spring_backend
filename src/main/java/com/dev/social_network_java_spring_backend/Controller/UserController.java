@@ -1,15 +1,14 @@
 package com.dev.social_network_java_spring_backend.Controller;
 
-import com.dev.social_network_java_spring_backend.Entity.Profile;
-import com.dev.social_network_java_spring_backend.Service.LoginCredentials;
-import com.dev.social_network_java_spring_backend.Service.ProfileService;
-import com.dev.social_network_java_spring_backend.Service.UserService;
-import com.dev.social_network_java_spring_backend.Entity.User;
+import com.dev.social_network_java_spring_backend.Dao.PostDao;
+import com.dev.social_network_java_spring_backend.Entity.*;
+import com.dev.social_network_java_spring_backend.Service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -58,7 +57,7 @@ public class UserController {
     }
 
 
-//*******************************************************************************
+    //*******************************************************************************
 
     @Autowired
     public ProfileService profileService;
@@ -71,6 +70,57 @@ public class UserController {
     @RequestMapping(value = "/profile/update", method = RequestMethod.PUT,consumes = MediaType.APPLICATION_JSON_VALUE)
     public String updateProfile(@RequestBody Profile newProfile){
         return profileService.updateProfile(newProfile);
+    }
+
+    //*******************************************************************************
+
+    @Autowired
+    public Friendship_pendingService friendship_pendingService;
+
+
+    @RequestMapping(value = "/user/addfriend/{id_a}/{id_b}",method = RequestMethod.GET)
+    public String sendRequest (@PathVariable("id_a") Long id_a,@PathVariable("id_b") Long id_b){
+        return friendship_pendingService.addUsersToPending(id_a,id_b);
+    }
+
+    @RequestMapping(value = "/user/getreceivedpendingreq/{id}",method = RequestMethod.GET)
+    public List<Friendship_pending> getReceivedPendingReq(@PathVariable("id") Long id){
+        return friendship_pendingService.getReceivedPendingReq(id);
+    }
+
+    @RequestMapping(value = "/user/getsentpendingreq/{id}",method = RequestMethod.GET)
+    public List<Friendship_pending> getSentPendingReq(@PathVariable("id") Long id){
+        return friendship_pendingService.getSentPendingReq(id);
+    }
+
+    //*******************************************************************************
+
+    @Autowired
+    private PostService postService;
+
+    @RequestMapping(value = "/post/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String CreatePost(@RequestBody Post post){
+        return postService.CreatePost(post);
+    }
+
+    @RequestMapping(value = "/post/get/id/{id}", method = RequestMethod.GET)
+    public Post getPostById(@PathVariable("id") Long id){
+       return postService.PostGetById(id);
+    }
+
+    @RequestMapping(value = "/post/get/all/user/id/{id}", method = RequestMethod.GET)
+    public List<Post> getAllPostsByUserId(@PathVariable("id") Long id){
+        return postService.getAllPostsByUserId(id);
+    }
+
+    //*******************************************************************************
+
+    @Autowired
+    private CommentService commentService;
+
+    @RequestMapping(value = "/post/comment/add/", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String addComment(@RequestBody Comment comment){
+        return commentService.addComment(comment);
     }
 
 }

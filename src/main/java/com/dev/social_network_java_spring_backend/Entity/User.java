@@ -25,7 +25,8 @@ public class User implements Serializable {
     private Timestamp creationDate;
     private Timestamp updateDate;
 
-    @JsonManagedReference
+
+    @JsonManagedReference(value = "user")
     @OneToOne(mappedBy = "user",cascade=CascadeType.ALL)
     private Profile profile;
 
