@@ -1,19 +1,13 @@
 package com.dev.social_network_java_spring_backend.Service;
 
-import com.dev.social_network_java_spring_backend.Entity.Friend;
 import com.dev.social_network_java_spring_backend.Entity.Profile;
 import com.dev.social_network_java_spring_backend.Entity.User;
 import com.dev.social_network_java_spring_backend.Dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Service

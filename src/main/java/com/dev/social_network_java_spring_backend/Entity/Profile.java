@@ -3,6 +3,7 @@ package com.dev.social_network_java_spring_backend.Entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -23,12 +24,12 @@ public class Profile implements Serializable {
     private String profilePhoto;
 
 
-
-    @JsonBackReference
+    @JsonBackReference(value = "user")
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 
+    // @JsonManagedReference(value = "post")
     @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name = "profile_post" ,
             joinColumns = {@JoinColumn(name = "profile_id")},
@@ -125,5 +126,7 @@ public class Profile implements Serializable {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+
 
 }

@@ -1,5 +1,8 @@
 package com.dev.social_network_java_spring_backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
@@ -13,10 +16,18 @@ public class Post implements Serializable {
     private Long id;
     private String owner;
     private String ownerPhoto;
+    private Long ownerId;
     private String type;
     private String body;
     private Date date;
+    private String tempComment;
 
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comment> comments;
+
+
+    @JsonBackReference(value = "post")
     @ManyToMany(mappedBy = "posts", cascade=CascadeType.ALL)
     private List<Profile> profiles;
 
@@ -24,8 +35,9 @@ public class Post implements Serializable {
     public Post() {
     }
 
-    public Post(String owner, String ownerPhoto, String type, String body, Date date) {
+    public Post(String owner,Long ownerId, String ownerPhoto, String type, String body, Date date) {
         this.owner = owner;
+        this.ownerId = ownerId;
         this.ownerPhoto = ownerPhoto;
         this.type = type;
         this.body = body;
@@ -72,6 +84,14 @@ public class Post implements Serializable {
         return date;
     }
 
+    public Long getOwnerId() {
+        return ownerId;
+    }
+
+    public void setOwnerId(Long ownerId) {
+        this.ownerId = ownerId;
+    }
+
     public void setDate(Date date) {
         this.date = date;
     }
@@ -84,5 +104,12 @@ public class Post implements Serializable {
         this.profiles = profiles;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
 }
